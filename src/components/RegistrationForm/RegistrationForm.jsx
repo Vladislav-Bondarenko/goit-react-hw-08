@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { register } from "../../redux/auth/operations";
 import * as Yup from "yup";
+import styles from "./RegistrationForm.module.css";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
@@ -25,27 +26,29 @@ export default function RegistrationForm() {
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      <Form autoComplete="off">
-        <label>
+      <Form autoComplete="off" className={styles.form}>
+        <label className={styles.label}>
           Name
-          <Field type="text" name="name" />
-          <ErrorMessage name="name" component="div" style={{ color: "red" }} />
+          <Field type="text" name="name" className={styles.input} />
+          <ErrorMessage name="name" component="div" className={styles.error} />
         </label>
-        <label>
+        <label className={styles.label}>
           Email
-          <Field type="email" name="email" />
-          <ErrorMessage name="email" component="div" style={{ color: "red" }} />
+          <Field type="email" name="email" className={styles.input} />
+          <ErrorMessage name="email" component="div" className={styles.error} />
         </label>
-        <label>
+        <label className={styles.label}>
           Password
-          <Field type="password" name="password" />
+          <Field type="password" name="password" className={styles.input} />
           <ErrorMessage
             name="password"
             component="div"
-            style={{ color: "red" }}
+            className={styles.error}
           />
         </label>
-        <button type="submit">Register</button>
+        <button type="submit" className={styles.button}>
+          Register
+        </button>
       </Form>
     </Formik>
   );
