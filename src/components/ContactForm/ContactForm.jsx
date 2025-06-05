@@ -4,6 +4,7 @@ import { selectContacts } from "../../redux/contacts/selectors";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import css from "./ContactForm.module.css";
+import toast from "react-hot-toast";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
@@ -20,11 +21,15 @@ export default function ContactForm() {
     );
 
     if (isDuplicate) {
-      alert(`${values.name} is already in contacts.`);
+      toast.error(`${values.name} is already in contacts.`);
       return;
     }
 
-    dispatch(addContact(values));
+    dispatch(addContact(values))
+      .unwrap()
+      .then(() => toast.success("Contact added successfully!"))
+      .catch(() => toast.error("Failed to add contact"));
+
     actions.resetForm();
   };
 
